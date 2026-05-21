@@ -20,7 +20,7 @@ class RegisterModel(private val app: Custom) {
     fun register(username: String, password: String, callback: RegisterCallback) {
         // Replace this with your new Render or Railway URL if Glitch is down
         // Example: "https://my-backend.onrender.com/save-profile"
-        val url = "https://my-backend.onrender.com/save-profile"
+        val url = "https://emptyclassroomfinder-1.onrender.com/save-profile"
 
         val formBody = FormBody.Builder()
             .add("username", username)
