@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.prefi"
+    namespace = "com.example.emptyclassroomfinder"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.prefi"
+        applicationId = "com.example.emptyclassroomfinder"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

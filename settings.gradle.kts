@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "prefi"
+rootProject.name = "EmptyClassroomFinder"
 include(":app")
  
