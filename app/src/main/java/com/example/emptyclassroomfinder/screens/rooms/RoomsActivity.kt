@@ -141,7 +141,9 @@ class RoomsActivity : AppCompatActivity(), RoomsContract.View, NavigationView.On
     }
 
     override fun updateList(rooms: List<Room>) {
-        listView.adapter = RoomsAdapter(this, rooms.toMutableList())
+        runOnUiThread {
+            listView.adapter = RoomsAdapter(this, rooms.toMutableList())
+        }
     }
 
     override fun showAddRoomDialog() {
@@ -221,7 +223,9 @@ class RoomsActivity : AppCompatActivity(), RoomsContract.View, NavigationView.On
     }
 
     override fun showMessage(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        runOnUiThread {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun closeDrawer() {

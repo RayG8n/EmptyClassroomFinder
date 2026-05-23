@@ -8,20 +8,42 @@ class RoomsPresenter(
 ) : RoomsContract.Presenter {
 
     override fun loadRooms() {
-        view.updateList(model.getRooms())
+        model.fetchRooms(object : RoomsModel.RoomsCallback {
+            override fun onSuccess(rooms: List<Room>) {
+                view.updateList(rooms)
+            }
+
+            override fun onFailure(message: String) {
+                view.showMessage("Error loading rooms: $message")
+            }
+        })
     }
 
     override fun addRoom(name: String, building: String, time: String, schedule: String) {
         val newRoom = Room(name, building, time, schedule)
-        model.addRoom(newRoom)
-        view.updateList(model.getRooms())
-        view.showMessage("Room added!")
+        model.addRoom(newRoom, object : RoomsModel.OperationCallback {
+            override fun onSuccess() {
+                loadRooms()
+                view.showMessage("Room added!")
+            }
+
+            override fun onFailure(message: String) {
+                view.showMessage("Error adding room: $message")
+            }
+        })
     }
 
     override fun deleteRoom(room: Room) {
-        model.removeRoom(room)
-        view.updateList(model.getRooms())
-        view.showMessage("Room deleted!")
+        model.removeRoom(room, object : RoomsModel.OperationCallback {
+            override fun onSuccess() {
+                loadRooms()
+                view.showMessage("Room deleted!")
+            }
+
+            override fun onFailure(message: String) {
+                view.showMessage("Error deleting room: $message")
+            }
+        })
     }
 
     override fun onRoomClicked(room: Room) {
