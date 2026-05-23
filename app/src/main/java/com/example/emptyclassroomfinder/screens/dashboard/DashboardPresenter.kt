@@ -3,6 +3,7 @@ package com.example.emptyclassroomfinder.screens.dashboard
 import android.content.Intent
 import com.example.emptyclassroomfinder.R
 import com.example.emptyclassroomfinder.screens.rooms.RoomsActivity
+import com.example.emptyclassroomfinder.screens.groups.GroupsActivity
 
 class DashboardPresenter(
     private val view: DashboardContract.View,
@@ -23,11 +24,9 @@ class DashboardPresenter(
                     it.startActivity(Intent(it, RoomsActivity::class.java))
                 }
             }
+            R.id.nav_groups -> view.showGroups()
             R.id.nav_dashboard -> view.closeDrawer()
-            R.id.nav_settings -> {
-                // Future implementation
-                view.closeDrawer()
-            }
+            R.id.nav_settings -> view.showSettings()
         }
         view.closeDrawer()
     }

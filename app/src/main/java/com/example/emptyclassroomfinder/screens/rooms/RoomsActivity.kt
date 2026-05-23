@@ -21,8 +21,10 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.example.emptyclassroomfinder.R
 import com.example.emptyclassroomfinder.data.Room
 import com.example.emptyclassroomfinder.screens.dashboard.DashboardActivity
+import com.example.emptyclassroomfinder.screens.groups.GroupsActivity
 import com.example.emptyclassroomfinder.screens.login.LoginActivity
 import com.example.emptyclassroomfinder.screens.profile.ProfileActivity
+import com.example.emptyclassroomfinder.screens.settings.SettingsActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import java.text.SimpleDateFormat
@@ -239,8 +241,16 @@ class RoomsActivity : AppCompatActivity(), RoomsContract.View, NavigationView.On
                 finish()
             }
             R.id.nav_rooms -> drawerLayout.closeDrawer(GravityCompat.START)
+            R.id.nav_groups -> {
+                startActivity(Intent(this, GroupsActivity::class.java))
+                finish()
+            }
             R.id.nav_profile -> {
                 startActivity(Intent(this, ProfileActivity::class.java))
+                finish()
+            }
+            R.id.nav_settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
                 finish()
             }
             R.id.nav_logout -> {

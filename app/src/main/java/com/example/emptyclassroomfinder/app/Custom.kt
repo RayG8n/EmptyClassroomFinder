@@ -7,6 +7,9 @@ import com.example.emptyclassroomfinder.data.User
 
 class Custom : Application() {
 
+    var isDarkMode: Boolean
+        get() = prefs.getBoolean("is_dark_mode", false)
+        set(value) = prefs.edit { putBoolean("is_dark_mode", value) }
     private val prefs by lazy { getSharedPreferences("app_prefs", Context.MODE_PRIVATE) }
 
     var defaultUsername: String

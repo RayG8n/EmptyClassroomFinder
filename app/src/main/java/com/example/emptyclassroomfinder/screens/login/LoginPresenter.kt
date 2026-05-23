@@ -1,20 +1,24 @@
 package com.example.emptyclassroomfinder.screens.login
 
-
 class LoginPresenter(private val view: LoginContract.View, private val model: LoginModel): LoginContract.Presenter {
 
     override fun login(username: String, password: String) {
-        if(!(username.isNullOrEmpty()) && !(password.isNullOrEmpty())){
-            if(model.validate(username, password)){
-                model.saveData(username, password)
-                view.showSuccess()
-                view.showHome()
-            }
-            else{
-                view.showInvalidCredentials()
-            }
-        }
-        else{
+        if (username.isNotEmpty() && password.isNotEmpty()) {
+            model.login(username, password, object : LoginModel.LoginCallback {
+                override fun onSuccess() {
+                    view.showSuccess()
+                    view.showHome()
+                }
+
+                override fun onFailure(message: String) {
+                    if (message.contains("Invalid", ignoreCase = true)) {
+                        view.showInvalidCredentials()
+                    } else {
+                        view.showMessage(message)
+                    }
+                }
+            })
+        } else {
             view.showEmptyField()
         }
     }

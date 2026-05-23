@@ -7,7 +7,7 @@ import java.io.IOException
 
 class RoomsModel {
     private val client = OkHttpClient()
-    private val baseUrl = "https://emptyclassroomfinder-2.onrender.com"
+    private val baseUrl = "https://emptyclassroomfinder-test.onrender.com"
 
     interface RoomsCallback {
         fun onSuccess(rooms: List<Room>)
@@ -49,7 +49,7 @@ class RoomsModel {
                         callback.onFailure("Parsing error: ${e.message}")
                     }
                 } else {
-                    callback.onFailure("Server error: ${response.code}")
+                    callback.onFailure("Server error: ${response.code} ${response.message}")
                 }
             }
         })
@@ -77,7 +77,7 @@ class RoomsModel {
                 if (response.isSuccessful) {
                     callback.onSuccess()
                 } else {
-                    callback.onFailure("Server error: ${response.code}")
+                    callback.onFailure("Server error: ${response.code} ${response.message}")
                 }
             }
         })
@@ -103,7 +103,7 @@ class RoomsModel {
                 if (response.isSuccessful) {
                     callback.onSuccess()
                 } else {
-                    callback.onFailure("Server error: ${response.code}")
+                    callback.onFailure("Server error: ${response.code} ${response.message}")
                 }
             }
         })
