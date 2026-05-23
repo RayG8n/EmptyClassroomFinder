@@ -42,6 +42,12 @@ const GROUPS_FILE = 'groups.json';
 let groups = [];
 if (fs.existsSync(GROUPS_FILE)) {
     groups = JSON.parse(fs.readFileSync(GROUPS_FILE));
+} else {
+    groups = [
+        { name: "Android Developers", owner: "Expert", members: ["Expert"] },
+        { name: "Empty Classrooms", owner: "Raymond", members: ["Raymond"] }
+    ];
+    fs.writeFileSync(GROUPS_FILE, JSON.stringify(groups));
 }
 
 function saveGroups() {
