@@ -44,7 +44,7 @@ if (fs.existsSync(GROUPS_FILE)) {
     groups = JSON.parse(fs.readFileSync(GROUPS_FILE));
 } else {
     groups = [
-        { name: "Android Developers", owner: "Expert", members: ["Expert"] },
+        { name: "Public Study Group", owner: "Student_A", members: ["Student1"] },
         { name: "Empty Classrooms", owner: "Raymond", members: ["Raymond"] }
     ];
     fs.writeFileSync(GROUPS_FILE, JSON.stringify(groups));
@@ -158,7 +158,7 @@ app.post('/leave-group', (req, res) => {
     res.status(200).send("Left group successfully");
 });
 
-// Delete group (tagiya only)
+// Delete group (owner only)
 app.post('/delete-group', (req, res) => {
     const { name, username } = req.body;
     const group = groups.find(g => g.name === name);
