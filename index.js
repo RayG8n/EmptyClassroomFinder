@@ -42,9 +42,6 @@ const GROUPS_FILE = 'groups.json';
 let groups = [];
 if (fs.existsSync(GROUPS_FILE)) {
     groups = JSON.parse(fs.readFileSync(GROUPS_FILE));
-} else {
-    groups = [];
-    fs.writeFileSync(GROUPS_FILE, JSON.stringify(groups));
 }
 
 function saveGroups() {
@@ -62,17 +59,10 @@ app.post('/save-profile', (req, res) => {
     if (!username || !password) {
         return res.status(400).send("Missing username or password");
     }
-
     const exists = users.find(u => u.username === username);
     if (exists) {
         return res.status(409).send("Username already taken");
     }
-
-    users.push({ username, password });
-    saveUsers();
-    res.status(200).send("User registered successfully");
-});
-
     users.push({ username, password });
     saveUsers();
     res.status(200).send("User registered successfully");
@@ -113,7 +103,6 @@ app.post('/delete-room', (req, res) => {
     res.status(200).send("Room deleted successfully");
 });
 
-// ── Group Routes ───────────────────────────────────────
 // Get all groups
 app.get('/get-groups', (req, res) => {
     res.json(groups);
@@ -128,21 +117,6 @@ app.post('/create-group', (req, res) => {
     if (groups.find(g => g.name === name)) {
         return res.status(409).send("Group name already taken");
     }
-
-    const newGroup = {
-        name: name,
-        owner: owner,
-        members: [owner]
-    };
-    groups.push(newGroup);
-    saveGroups();
-    res.status(200).json(newGroup);
-});
-
-    const exists = groups.find(g => g.name === name);
-    if (exists) {
-        return res.status(409).send("Group name already taken");
-    }
     groups.push({ name, owner, members: [owner] });
     saveGroups();
     res.status(200).send("Group created successfully");
@@ -155,24 +129,6 @@ app.post('/join-group', (req, res) => {
     if (!group) {
         return res.status(404).send("Group not found");
     }
-    if (!group.members.includes(username)) {
-        group.members.push(username);
-        saveGroups();
-    }
-    res.status(200).send("Joined successfully");
-});
-
-app.post('/delete-group', (req, res) => {
-    const { name, username } = req.body;
-    const groupIndex = groups.findIndex(g => g.name === name);
-    if (groupIndex === -1) {
-        return res.status(404).send("Group not found");
-    }
-    if (groups[groupIndex].owner !== username) {
-        return res.status(403).send("Only the owner can delete the group");
-    }
-
-    groups.splice(groupIndex, 1);
     if (group.members.includes(username)) {
         return res.status(400).send("Already a member");
     }
@@ -196,6 +152,7 @@ app.post('/delete-group', (req, res) => {
     res.status(200).send("Group deleted successfully");
 });
 
+// https://emptyclassroomfinder-test.onrender.com/debug-users to check for user accs sa registration
 app.get('/debug-users', (req, res) => {
     res.json(users);
 });
