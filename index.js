@@ -160,6 +160,10 @@ app.post('/delete-group', (req, res) => {
     res.status(200).send("Group deleted successfully");
 });
 
+app.get('/debug-users', (req, res) => {
+    res.json(users);
+});
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

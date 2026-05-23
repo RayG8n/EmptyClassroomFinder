@@ -13,11 +13,11 @@ class Custom : Application() {
     private val prefs by lazy { getSharedPreferences("app_prefs", Context.MODE_PRIVATE) }
 
     var defaultUsername: String
-        get() = prefs.getString("username", "") ?: ""
+        get() = prefs.getString("username", "test") ?: "test"
         set(value) = prefs.edit { putString("username", value) }
 
     var defaultPassword: String
-        get() = prefs.getString("password", "") ?: ""
+        get() = prefs.getString("password", "test") ?: "test"
         set(value) = prefs.edit { putString("password", value) }
 
     var loginUser = User()

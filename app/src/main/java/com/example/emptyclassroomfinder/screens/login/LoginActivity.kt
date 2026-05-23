@@ -28,8 +28,8 @@ class LoginActivity : Activity(), LoginContract.View {
         val textviewRegister = findViewById<TextView>(R.id.textviewRegister)
 
         buttonLogin.setOnClickListener{
-           username = getEditTextValue(R.id.editextUsername).trim()
-           password = getEditTextValue(R.id.editextPassword).trim()
+           username = getEditTextValue(R.id.editextUsername)
+           password = getEditTextValue(R.id.editextPassword)
 
             Presenter.login(username, password)
         }

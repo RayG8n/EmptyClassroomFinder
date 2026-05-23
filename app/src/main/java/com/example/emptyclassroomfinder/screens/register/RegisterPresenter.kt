@@ -18,6 +18,11 @@ class RegisterPresenter(private val view: RegisterContract.View, private val mod
             return
         }
 
+        if (model.isUsernameTaken(username)) {
+            view.showUsernameTaken()
+            return
+        }
+
         model.register(username, password, object : RegisterModel.RegisterCallback {
             override fun onSuccess() {
                 mainHandler.post {
