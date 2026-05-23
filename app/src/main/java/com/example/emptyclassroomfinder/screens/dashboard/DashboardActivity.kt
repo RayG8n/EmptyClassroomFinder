@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.cardview.widget.CardView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.emptyclassroomfinder.R
@@ -56,19 +57,25 @@ class DashboardActivity : AppCompatActivity(), DashboardContract.View, Navigatio
     }
 
     private fun setupButtons() {
-        val buttonProfile = findViewById<Button>(R.id.buttonProfile)
-        val buttonGroups = findViewById<Button>(R.id.buttonGroups)
-        val buttonBackToLogin = findViewById<Button>(R.id.buttonBackToLogin)
+        val cardRooms = findViewById<CardView>(R.id.cardRooms)
+        val cardGroups = findViewById<CardView>(R.id.cardGroups)
+        val cardProfile = findViewById<CardView>(R.id.cardProfile)
+        val buttonLogout = findViewById<Button>(R.id.buttonLogout)
 
-        buttonProfile.setOnClickListener {
-            showProfile()
+        cardRooms.setOnClickListener {
+            val intent = Intent(this, RoomsActivity::class.java)
+            startActivity(intent)
         }
 
-        buttonGroups.setOnClickListener {
+        cardGroups.setOnClickListener {
             showGroups()
         }
 
-        buttonBackToLogin.setOnClickListener {
+        cardProfile.setOnClickListener {
+            showProfile()
+        }
+
+        buttonLogout.setOnClickListener {
             showLogin()
         }
     }

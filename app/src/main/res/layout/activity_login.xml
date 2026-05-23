@@ -5,54 +5,90 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/classroom_bg"
+    android:padding="32dp"
+    android:gravity="center_vertical"
     tools:context=".screens.login.LoginActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="[ LOGIN ]"
         android:layout_gravity="center_horizontal"
-        android:padding="10dp"
-        android:layout_marginTop="20dp"
-        android:textSize="40sp"/>
+        android:layout_marginBottom="48dp"
+        android:textColor="@color/classroom_text"
+        android:textStyle="bold"
+        android:textSize="32sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="USERNAME:"
+        android:textColor="@color/pencil_grey"
+        android:textSize="12sp"
+        android:layout_marginStart="8dp"/>
 
     <EditText
         android:id="@+id/editextUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
-        android:layout_margin="15dp"
-        android:padding="10dp"
-        />
+        android:hint="Type here..."
+        android:background="@null"
+        android:padding="12dp"
+        android:textColor="@color/classroom_text"
+        android:layout_marginBottom="24dp"
+        android:inputType="text"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/pencil_grey"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PASSWORD:"
+        android:textColor="@color/pencil_grey"
+        android:textSize="12sp"
+        android:layout_marginStart="8dp"/>
 
     <EditText
         android:id="@+id/editextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="********"
+        android:background="@null"
+        android:padding="12dp"
+        android:textColor="@color/classroom_text"
         android:inputType="textPassword"
-        android:layout_margin="15dp"
-        android:padding="10dp"
-        />
+        android:layout_marginBottom="24dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/pencil_grey"
+        android:layout_marginBottom="48dp"/>
 
     <Button
         android:id="@+id/buttonLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:padding="10dp"/>
+        android:text="ENTER"
+        android:backgroundTint="@color/chalkboard_green"
+        android:textColor="@color/chalk_white"
+        android:letterSpacing="0.2"
+        android:padding="16dp"/>
 
     <TextView
         android:id="@+id/textviewRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Not yet Registered?"
+        android:text="-> Register New Account"
         android:layout_gravity="center_horizontal"
-        android:padding="10dp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/blue"
+        android:layout_marginTop="24dp"
+        android:textSize="14sp"
+        android:textColor="@color/pencil_grey"
         />
 
 </LinearLayout>

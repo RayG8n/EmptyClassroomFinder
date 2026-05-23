@@ -6,6 +6,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/classroom_bg"
     tools:context=".screens.rooms.RoomsActivity">
 
     <LinearLayout
@@ -17,9 +18,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:titleTextColor="@android:color/white"
-            android:elevation="4dp"
+            android:background="@color/chalkboard_green"
+            app:titleTextColor="@color/chalk_white"
+            android:elevation="0dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
         <FrameLayout
@@ -29,16 +30,24 @@
             <ListView
                 android:id="@+id/listViewRooms"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:divider="@color/pencil_grey"
+                android:dividerHeight="0.5dp"
+                android:padding="8dp"
+                android:clipToPadding="false" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fabAddRoom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
-                android:layout_margin="16dp"
-                android:src="@android:drawable/ic_input_add"
-                app:tint="@android:color/white" />
+                android:layout_margin="24dp"
+                app:backgroundTint="@color/chalkboard_green"
+                app:tint="@color/chalk_white"
+                app:elevation="4dp"
+                app:fabSize="normal"
+                app:srcCompat="@android:drawable/ic_input_add" />
+
         </FrameLayout>
 
     </LinearLayout>
@@ -48,6 +57,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@color/classroom_bg"
+        app:itemTextColor="@color/classroom_text"
+        app:itemIconTint="@color/chalkboard_green"
         app:menu="@menu/drawer_menu"
         app:headerLayout="@layout/nav_header"/>
 

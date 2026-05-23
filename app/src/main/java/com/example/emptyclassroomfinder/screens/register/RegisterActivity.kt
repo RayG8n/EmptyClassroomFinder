@@ -20,6 +20,7 @@ class RegisterActivity : Activity(), RegisterContract.View {
         registerPresenter = RegisterPresenter(this, RegisterModel(application as Custom))
 
         val buttonRegister = findViewById<Button>(R.id.buttonRegister)
+        val textviewBackToLogin = findViewById<android.widget.TextView>(R.id.textviewBackToLogin)
 
         buttonRegister.setOnClickListener {
             val username = getEditTextValue(R.id.edittextUsername)
@@ -27,6 +28,10 @@ class RegisterActivity : Activity(), RegisterContract.View {
             val confirmPassword = getEditTextValue(R.id.edittextConfirmPassword)
 
             registerPresenter.register(username, password, confirmPassword)
+        }
+
+        textviewBackToLogin.setOnClickListener {
+            goToLogin()
         }
     }
 

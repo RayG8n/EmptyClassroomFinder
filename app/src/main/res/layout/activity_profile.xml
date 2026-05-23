@@ -6,48 +6,126 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/classroom_bg"
     tools:context=".screens.profile.ProfileActivity">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".screens.profile.ProfileActivity"
-    android:orientation="vertical">
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:titleTextColor="@android:color/white"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textviewUser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:layout_margin="20dp"
-        />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/chalkboard_green"
+            app:titleTextColor="@color/chalk_white"
+            android:elevation="0dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
-    <Button
-        android:id="@+id/buttonBackToLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:padding="10dp"
-        android:text="Back to Login" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-</LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="32dp">
+
+                <TextView
+                    android:id="@+id/textviewBackToDashboard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Back to Dashboard"
+                    android:layout_marginBottom="32dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/pencil_grey"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="[ EDIT PROFILE ]"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="48dp"
+                    android:textColor="@color/classroom_text"
+                    android:textStyle="bold"
+                    android:textSize="24sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CURRENT USERNAME:"
+                    android:textColor="@color/pencil_grey"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/textviewUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:textColor="@color/classroom_text"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="24dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NEW USERNAME:"
+                    android:textColor="@color/pencil_grey"
+                    android:textSize="12sp"/>
+
+                <EditText
+                    android:id="@+id/edittextNewUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Type new name..."
+                    android:background="@null"
+                    android:padding="12dp"
+                    android:textColor="@color/classroom_text"
+                    android:inputType="text"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/pencil_grey"
+                    android:layout_marginBottom="48dp"/>
+
+                <Button
+                    android:id="@+id/buttonUpdateProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="UPDATE PROFILE"
+                    android:backgroundTint="@color/chalkboard_green"
+                    android:textColor="@color/chalk_white"
+                    android:letterSpacing="0.1"
+                    android:padding="16dp"/>
+
+                <Button
+                    android:id="@+id/buttonBackToLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="LOGOUT"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="@color/wood_brown"
+                    android:textColor="@color/chalk_white"
+                    android:letterSpacing="0.1"
+                    android:padding="16dp"/>
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@color/classroom_bg"
+        app:itemTextColor="@color/ink_black"
+        app:itemIconTint="@color/chalkboard_green"
         app:menu="@menu/drawer_menu"
         app:headerLayout="@layout/nav_header"/>
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Semantic Semantic Colors for Dark Mode -->
+    <color name="classroom_bg">#121B12</color> <!-- Deep Green/Black board -->
+    <color name="classroom_text">#E0E0E0</color> <!-- Chalk White -->
+
+    <color name="card_bg_primary">#2E4D2E</color> <!-- Brighter board green -->
+    <color name="card_text_primary">#E0E0E0</color> <!-- Chalk White -->
+
+    <color name="card_bg_secondary">#1B2E1B</color> <!-- Chalkboard green -->
+    <color name="card_text_secondary">#E0E0E0</color> <!-- Chalk White -->
+
+    <!-- Override palette colors that might be used directly -->
+    <color name="parchment_cream">#121B12</color>
+    <color name="ink_black">#E0E0E0</color>
+    <color name="pencil_grey">#B0B0B0</color>
+</resources>

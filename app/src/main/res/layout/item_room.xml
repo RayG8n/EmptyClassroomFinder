@@ -1,65 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:descendantFocusability="blocksDescendants">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="@color/card_bg_primary">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/btnDeleteRoom"
-        android:orientation="vertical">
+        android:padding="16dp">
 
-        <TextView
-            android:id="@+id/textRoomName"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:text="Room 101" />
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/btnDeleteRoom"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textBuilding"
+            <TextView
+                android:id="@+id/textRoomName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/card_text_primary"
+                android:text="ROOM 101" />
+
+            <TextView
+                android:id="@+id/textBuilding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Building A"
+                android:textSize="12sp"
+                android:textColor="@color/card_text_primary"
+                android:alpha="0.7" />
+
+            <View
+                android:layout_width="40dp"
+                android:layout_height="1dp"
+                android:background="@color/card_text_primary"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"/>
+
+            <TextView
+                android:id="@+id/textTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="08:00 - 10:00"
+                android:textColor="@color/card_text_primary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/textSchedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2023-10-30"
+                android:textColor="@color/card_text_primary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/textDayOfWeek"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MONDAY"
+                android:textColor="@color/card_text_primary"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnDeleteRoom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Main Building"
-            android:textColor="#666666" />
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_delete"
+            app:tint="@color/card_text_primary"
+            android:contentDescription="Delete Room"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
 
-        <TextView
-            android:id="@+id/textTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="8:30 AM - 12:30 PM"
-            android:textColor="#366CF4" />
-
-        <TextView
-            android:id="@+id/textSchedule"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2023-10-30"
-            android:textColor="#FF5722"
-            android:textStyle="italic" />
-
-        <TextView
-            android:id="@+id/textDayOfWeek"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Monday"
-            android:textColor="#FF5722"
-            android:textStyle="italic" />
-    </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/btnDeleteRoom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@android:drawable/ic_menu_delete"
-        android:contentDescription="Delete Room"
-        android:focusable="false" />
-
-</RelativeLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

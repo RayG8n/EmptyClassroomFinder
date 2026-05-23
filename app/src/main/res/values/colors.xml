@@ -3,4 +3,20 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blue">#366CF4</color>
+
+    <!-- Vintage Classroom Palette -->
+    <color name="chalkboard_green">#1B2E1B</color>
+    <color name="chalk_white">#E0E0E0</color>
+    <color name="parchment_cream">#F5F5DC</color>
+    <color name="ink_black">#1A1A1A</color>
+    <color name="pencil_grey">#757575</color>
+    <color name="wood_brown">#5D4037</color>
+
+    <!-- Semantic Semantic Colors -->
+    <color name="classroom_bg">@color/parchment_cream</color>
+    <color name="classroom_text">@color/ink_black</color>
+    <color name="card_bg_primary">@color/chalkboard_green</color>
+    <color name="card_text_primary">@color/chalk_white</color>
+    <color name="card_bg_secondary">#FFFFFF</color>
+    <color name="card_text_secondary">@color/ink_black</color>
 </resources>

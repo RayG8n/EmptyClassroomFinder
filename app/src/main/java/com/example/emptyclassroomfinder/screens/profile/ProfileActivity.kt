@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -15,13 +17,15 @@ import com.example.emptyclassroomfinder.app.Custom
 import com.example.emptyclassroomfinder.screens.dashboard.DashboardActivity
 import com.example.emptyclassroomfinder.screens.groups.GroupsActivity
 import com.example.emptyclassroomfinder.screens.login.LoginActivity
+import com.example.emptyclassroomfinder.screens.rooms.RoomsActivity
 import com.example.emptyclassroomfinder.screens.settings.SettingsActivity
 import com.google.android.material.navigation.NavigationView
 
 class ProfileActivity : AppCompatActivity(), ProfileContract.View, NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var presenter: ProfilePresenter
-    private lateinit var textViewWelcome: TextView
+    private lateinit var textViewUser: TextView
+    private lateinit var edittextNewUsername: EditText
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var navView: NavigationView
@@ -30,13 +34,28 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View, NavigationVie
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        textViewWelcome = findViewById(R.id.textviewUser)
+        textViewUser = findViewById(R.id.textviewUser)
+        edittextNewUsername = findViewById(R.id.edittextNewUsername)
+        val textviewBackToDashboard = findViewById<TextView>(R.id.textviewBackToDashboard)
+        val buttonUpdateProfile = findViewById<Button>(R.id.buttonUpdateProfile)
         val buttonBackToLogin = findViewById<Button>(R.id.buttonBackToLogin)
 
         presenter = ProfilePresenter(this, ProfileModel(application as Custom))
         presenter.initializeUsername()
 
         setupDrawer()
+
+        buttonUpdateProfile.setOnClickListener {
+            val newName = edittextNewUsername.text.toString()
+            presenter.updateUsername(newName)
+            updateDrawerHeader(newName)
+        }
+
+        textviewBackToDashboard.setOnClickListener {
+            val intent = Intent(this, DashboardActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         buttonBackToLogin.setOnClickListener {
             showLogin()
@@ -59,20 +78,30 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View, NavigationVie
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         navView.setNavigationItemSelectedListener(this)
         
-
-        val headerView = navView.getHeaderView(0)
-        val usernameTextView = headerView.findViewById<TextView>(R.id.nav_header_text)
-
-        usernameTextView.text = "User"
+        updateDrawerHeader((application as Custom).loginUser.username)
     }
 
-    override fun displayUsername(message: String) {
-        textViewWelcome.text = message
+    private fun updateDrawerHeader(username: String) {
+        val headerView = navView.getHeaderView(0)
+        val usernameTextView = headerView.findViewById<TextView>(R.id.nav_header_text)
+        usernameTextView.text = username
+    }
+
+    override fun displayUsername(username: String) {
+        textViewUser.text = username
+    }
+
+    override fun showMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun clearNewUsernameField() {
+        edittextNewUsername.text.clear()
     }
 
     private fun showLogin() {
         val intent = Intent(this, LoginActivity::class.java)
-
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
     }
@@ -83,11 +112,15 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View, NavigationVie
                 startActivity(Intent(this, DashboardActivity::class.java))
                 finish()
             }
-            R.id.nav_profile -> drawerLayout.closeDrawer(GravityCompat.START)
+            R.id.nav_rooms -> {
+                startActivity(Intent(this, RoomsActivity::class.java))
+                finish()
+            }
             R.id.nav_groups -> {
                 startActivity(Intent(this, GroupsActivity::class.java))
                 finish()
             }
+            R.id.nav_profile -> drawerLayout.closeDrawer(GravityCompat.START)
             R.id.nav_settings -> {
                 startActivity(Intent(this, SettingsActivity::class.java))
                 finish()
