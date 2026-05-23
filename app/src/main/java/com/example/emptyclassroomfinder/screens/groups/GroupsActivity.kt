@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -20,6 +21,7 @@ import com.example.emptyclassroomfinder.screens.dashboard.DashboardActivity
 import com.example.emptyclassroomfinder.screens.login.LoginActivity
 import com.example.emptyclassroomfinder.screens.profile.ProfileActivity
 import com.example.emptyclassroomfinder.screens.rooms.RoomsActivity
+import com.example.emptyclassroomfinder.utility.getToast
 import com.example.emptyclassroomfinder.screens.settings.SettingsActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
@@ -41,6 +43,7 @@ class GroupsActivity : AppCompatActivity(), GroupsContract.View, NavigationView.
 
         listView = findViewById(R.id.listViewGroups)
         val fabAdd = findViewById<FloatingActionButton>(R.id.fabAddGroup)
+        val fabOptions = findViewById<FloatingActionButton>(R.id.fabGroupOptions)
 
         setupDrawer()
 
@@ -48,15 +51,18 @@ class GroupsActivity : AppCompatActivity(), GroupsContract.View, NavigationView.
             showCreateGroupDialog()
         }
 
-        listView.setOnItemClickListener { _, _, position, _ ->
-            val group = listView.adapter.getItem(position) as Group
-            presenter.onGroupClicked(group)
-        }
-
-        listView.setOnItemLongClickListener { _, _, position, _ ->
-            val group = listView.adapter.getItem(position) as Group
-            presenter.onGroupLongClicked(group)
-            true
+        fabOptions.setOnClickListener { view ->
+            val popup = PopupMenu(this, view)
+            popup.menu.add("Join Group")
+            popup.menu.add("Leave Group")
+            popup.setOnMenuItemClickListener { item ->
+                when (item.title) {
+                    "Join Group" -> showJoinGroupDialog()
+                    "Leave Group" -> showLeaveGroupDialog()
+                }
+                true
+            }
+            popup.show()
         }
 
         presenter.loadGroups()
@@ -85,9 +91,13 @@ class GroupsActivity : AppCompatActivity(), GroupsContract.View, NavigationView.
 
     override fun updateGroupsList(groups: List<Group>) {
         runOnUiThread {
-            listView.adapter = GroupsAdapter(this, groups.toMutableList()) { group ->
+            listView.adapter = GroupsAdapter(this, groups.toMutableList(), { group ->
+                presenter.onGroupClicked(group)
+            }, { group ->
                 presenter.onGroupLongClicked(group)
-            }
+            }, { group ->
+                presenter.onGroupLongClicked(group)
+            })
         }
     }
 
@@ -152,6 +162,32 @@ class GroupsActivity : AppCompatActivity(), GroupsContract.View, NavigationView.
             .setPositiveButton("Yes") { _, _ -> presenter.deleteGroup(group.name) }
             .setNegativeButton("No", null)
             .show()
+    }
+
+    override fun showJoinGroupDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Join Group")
+        val input = EditText(this)
+        input.hint = "Group Name"
+        builder.setView(input)
+        builder.setPositiveButton("Join") { _, _ ->
+            presenter.joinGroup(input.text.toString())
+        }
+        builder.setNegativeButton("Cancel", null)
+        builder.show()
+    }
+
+    override fun showLeaveGroupDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Leave Group")
+        val input = EditText(this)
+        input.hint = "Group Name"
+        builder.setView(input)
+        builder.setPositiveButton("Leave") { _, _ ->
+            presenter.leaveGroup(input.text.toString())
+        }
+        builder.setNegativeButton("Cancel", null)
+        builder.show()
     }
 
     override fun closeDrawer() {

@@ -143,6 +143,21 @@ app.post('/join-group', (req, res) => {
     res.status(200).send("Joined group successfully");
 });
 
+// Leave a group
+app.post('/leave-group', (req, res) => {
+    const { name, username } = req.body;
+    const group = groups.find(g => g.name === name);
+    if (!group) {
+        return res.status(404).send("Group not found");
+    }
+    if (group.owner === username) {
+        return res.status(400).send("Owner cannot leave the group. Delete it instead.");
+    }
+    group.members = group.members.filter(m => m !== username);
+    saveGroups();
+    res.status(200).send("Left group successfully");
+});
+
 // Delete a group (owner only)
 app.post('/delete-group', (req, res) => {
     const { name, username } = req.body;

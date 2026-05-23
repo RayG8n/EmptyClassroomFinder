@@ -9,6 +9,8 @@ class GroupsContract {
         fun showCreateGroupDialog()
         fun showGroupDetails(group: Group)
         fun showDeleteConfirmation(group: Group)
+        fun showJoinGroupDialog()
+        fun showLeaveGroupDialog()
         fun closeDrawer()
     }
 
@@ -16,6 +18,7 @@ class GroupsContract {
         fun loadGroups()
         fun createGroup(name: String)
         fun joinGroup(groupName: String)
+        fun leaveGroup(groupName: String)
         fun deleteGroup(groupName: String)
         fun onGroupClicked(group: Group)
         fun onGroupLongClicked(group: Group)

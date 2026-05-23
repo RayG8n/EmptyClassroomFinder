@@ -108,6 +108,29 @@ class GroupsModel(private val app: Custom) {
         })
     }
 
+    fun leaveGroup(groupName: String, callback: OperationCallback) {
+        val formBody = FormBody.Builder()
+            .add("name", groupName)
+            .add("username", app.defaultUsername)
+            .build()
+
+        val request = Request.Builder()
+            .url("$baseUrl/leave-group")
+            .post(formBody)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                callback.onFailure(e.message ?: "Unknown error")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) callback.onSuccess()
+                else callback.onFailure("Server error: ${response.code}")
+            }
+        })
+    }
+
     fun deleteGroup(groupName: String, callback: OperationCallback) {
         val formBody = FormBody.Builder()
             .add("name", groupName)

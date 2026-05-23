@@ -44,7 +44,6 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@android:drawable/ic_menu_delete"
         android:contentDescription="Delete Group"
-        android:focusable="false"
-        android:focusableInTouchMode="false" />
+        android:focusable="false" />
 
 </RelativeLayout>

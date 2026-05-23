@@ -13,6 +13,8 @@ import com.example.emptyclassroomfinder.data.Group
 class GroupsAdapter(
     private val context: Context, 
     private val groups: MutableList<Group>,
+    private val onItemClick: (Group) -> Unit,
+    private val onItemLongClick: (Group) -> Unit,
     private val onDeleteClick: (Group) -> Unit
 ) : BaseAdapter() {
 
@@ -33,6 +35,15 @@ class GroupsAdapter(
         nameText.text = group.name
         ownerText.text = "Owner: ${group.owner}"
         memberCountText.text = "${group.members.size} members"
+
+        view.setOnClickListener {
+            onItemClick(group)
+        }
+
+        view.setOnLongClickListener {
+            onItemLongClick(group)
+            true
+        }
 
         btnDelete.setOnClickListener {
             onDeleteClick(group)

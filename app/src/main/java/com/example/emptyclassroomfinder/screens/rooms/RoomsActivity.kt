@@ -54,17 +54,6 @@ class RoomsActivity : AppCompatActivity(), RoomsContract.View, NavigationView.On
             showAddRoomDialog()
         }
 
-        listView.setOnItemClickListener { _, _, position, _ ->
-            val room = listView.adapter.getItem(position) as Room
-            presenter.onRoomClicked(room)
-        }
-
-        listView.setOnItemLongClickListener { _, _, position, _ ->
-            val room = listView.adapter.getItem(position) as Room
-            presenter.onRoomLongClicked(room)
-            true
-        }
-
         presenter.loadRooms()
     }
 
@@ -144,9 +133,13 @@ class RoomsActivity : AppCompatActivity(), RoomsContract.View, NavigationView.On
 
     override fun updateList(rooms: List<Room>) {
         runOnUiThread {
-            listView.adapter = RoomsAdapter(this, rooms.toMutableList()) { room ->
+            listView.adapter = RoomsAdapter(this, rooms.toMutableList(), { room ->
+                presenter.onRoomClicked(room)
+            }, { room ->
                 presenter.onRoomLongClicked(room)
-            }
+            }, { room ->
+                presenter.onRoomLongClicked(room)
+            })
         }
     }
 

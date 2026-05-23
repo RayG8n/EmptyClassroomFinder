@@ -49,6 +49,19 @@ class GroupsPresenter(
         })
     }
 
+    override fun leaveGroup(groupName: String) {
+        model.leaveGroup(groupName, object : GroupsModel.OperationCallback {
+            override fun onSuccess() {
+                loadGroups()
+                view.showMessage("Left group!")
+            }
+
+            override fun onFailure(message: String) {
+                view.showMessage("Error leaving group: $message")
+            }
+        })
+    }
+
     override fun deleteGroup(groupName: String) {
         model.deleteGroup(groupName, object : GroupsModel.OperationCallback {
             override fun onSuccess() {

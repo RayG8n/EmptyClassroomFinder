@@ -15,6 +15,8 @@ import java.util.Locale
 class RoomsAdapter(
     private val context: Context, 
     private val rooms: MutableList<Room>,
+    private val onItemClick: (Room) -> Unit,
+    private val onItemLongClick: (Room) -> Unit,
     private val onDeleteClick: (Room) -> Unit
 ) : BaseAdapter() {
 
@@ -55,6 +57,15 @@ class RoomsAdapter(
         dayOfWeekText.text = dayOfWeek
         dayOfWeekText.visibility = if (dayOfWeek.isNotEmpty()) View.VISIBLE else View.GONE
         
+        view.setOnClickListener {
+            onItemClick(room)
+        }
+
+        view.setOnLongClickListener {
+            onItemLongClick(room)
+            true
+        }
+
         btnDelete.setOnClickListener {
             onDeleteClick(room)
         }

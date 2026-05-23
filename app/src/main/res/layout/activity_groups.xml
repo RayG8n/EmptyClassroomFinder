@@ -41,6 +41,15 @@
                 android:contentDescription="Add Group"
                 app:srcCompat="@android:drawable/ic_input_add" />
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabGroupOptions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_margin="16dp"
+                android:contentDescription="Group Options"
+                app:srcCompat="@android:drawable/ic_menu_more" />
+
         </FrameLayout>
 
     </LinearLayout>
