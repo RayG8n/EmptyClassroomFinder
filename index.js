@@ -159,11 +159,3 @@ app.get('/debug-users', (req, res) => {
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
-
-app.get('/debug-users', (req, res) => {
-    res.json(users);
-});
-
-app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-});
