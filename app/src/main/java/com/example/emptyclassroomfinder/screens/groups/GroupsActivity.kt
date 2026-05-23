@@ -33,6 +33,7 @@ class GroupsActivity : AppCompatActivity(), GroupsContract.View, NavigationView.
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var navView: NavigationView
+    private var allGroups: List<Group> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,6 +91,7 @@ class GroupsActivity : AppCompatActivity(), GroupsContract.View, NavigationView.
     }
 
     override fun updateGroupsList(groups: List<Group>) {
+        this.allGroups = groups
         runOnUiThread {
             listView.adapter = GroupsAdapter(this, groups.toMutableList(), { group ->
                 presenter.onGroupClicked(group)
@@ -165,29 +167,43 @@ class GroupsActivity : AppCompatActivity(), GroupsContract.View, NavigationView.
     }
 
     override fun showJoinGroupDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Join Group")
-        val input = EditText(this)
-        input.hint = "Group Name"
-        builder.setView(input)
-        builder.setPositiveButton("Join") { _, _ ->
-            presenter.joinGroup(input.text.toString())
+        val app = (application as Custom)
+        val joinableGroups = allGroups.filter { !it.members.contains(app.defaultUsername) }
+
+        if (joinableGroups.isEmpty()) {
+            showMessage("No new groups available to join")
+            return
         }
-        builder.setNegativeButton("Cancel", null)
-        builder.show()
+
+        val names = joinableGroups.map { it.name }.toTypedArray()
+        AlertDialog.Builder(this)
+            .setTitle("Select Group to Join")
+            .setItems(names) { _, which ->
+                presenter.joinGroup(names[which])
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
     override fun showLeaveGroupDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Leave Group")
-        val input = EditText(this)
-        input.hint = "Group Name"
-        builder.setView(input)
-        builder.setPositiveButton("Leave") { _, _ ->
-            presenter.leaveGroup(input.text.toString())
+        val app = (application as Custom)
+        val leavableGroups = allGroups.filter {
+            it.members.contains(app.defaultUsername) && it.owner != app.defaultUsername
         }
-        builder.setNegativeButton("Cancel", null)
-        builder.show()
+
+        if (leavableGroups.isEmpty()) {
+            showMessage("You are not in any groups that you can leave")
+            return
+        }
+
+        val names = leavableGroups.map { it.name }.toTypedArray()
+        AlertDialog.Builder(this)
+            .setTitle("Select Group to Leave")
+            .setItems(names) { _, which ->
+                presenter.leaveGroup(names[which])
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
     override fun closeDrawer() {
