@@ -6,7 +6,7 @@ const port = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// ── Users ──────────────────────────────────────────────
+// ── Users
 const USERS_FILE = 'users.json';
 
 let users = [];
@@ -18,7 +18,7 @@ function saveUsers() {
     fs.writeFileSync(USERS_FILE, JSON.stringify(users));
 }
 
-// ── Rooms ──────────────────────────────────────────────
+//  Rooms
 const ROOMS_FILE = 'rooms.json';
 
 let rooms = [];
@@ -36,7 +36,7 @@ function saveRooms() {
     fs.writeFileSync(ROOMS_FILE, JSON.stringify(rooms));
 }
 
-// ── Groups ─────────────────────────────────────────────
+// Groups
 const GROUPS_FILE = 'groups.json';
 
 let groups = [];
@@ -90,7 +90,7 @@ app.get('/get-rooms', (req, res) => {
     res.json(rooms);
 });
 
-// Add a room
+// Add room
 app.post('/save-room', (req, res) => {
     const { name, building, time, schedule } = req.body;
     if (!name || !building || !time || !schedule) {
@@ -101,7 +101,7 @@ app.post('/save-room', (req, res) => {
     res.status(200).send("Room added successfully");
 });
 
-// Delete a room
+// Delete room
 app.post('/delete-room', (req, res) => {
     const { name } = req.body;
     rooms = rooms.filter(r => r.name !== name);
@@ -114,7 +114,7 @@ app.get('/get-groups', (req, res) => {
     res.json(groups);
 });
 
-// Create a group
+// Create group
 app.post('/create-group', (req, res) => {
     const { name, owner } = req.body;
     if (!name || !owner) {
@@ -128,7 +128,7 @@ app.post('/create-group', (req, res) => {
     res.status(200).send("Group created successfully");
 });
 
-// Join a group
+// Join group
 app.post('/join-group', (req, res) => {
     const { name, username } = req.body;
     const group = groups.find(g => g.name === name);
@@ -143,7 +143,7 @@ app.post('/join-group', (req, res) => {
     res.status(200).send("Joined group successfully");
 });
 
-// Leave a group
+// Leave group
 app.post('/leave-group', (req, res) => {
     const { name, username } = req.body;
     const group = groups.find(g => g.name === name);
@@ -158,7 +158,7 @@ app.post('/leave-group', (req, res) => {
     res.status(200).send("Left group successfully");
 });
 
-// Delete a group (owner only)
+// Delete group (tagiya only)
 app.post('/delete-group', (req, res) => {
     const { name, username } = req.body;
     const group = groups.find(g => g.name === name);
