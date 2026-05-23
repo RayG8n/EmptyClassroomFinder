@@ -93,6 +93,57 @@ app.post('/delete-room', (req, res) => {
     res.status(200).send("Room deleted successfully");
 });
 
+
+// Get all groups sa app
+app.get('/get-groups', (req, res) => {
+    res.json(groups);
+});
+
+// Create a group
+app.post('/create-group', (req, res) => {
+    const { name, owner } = req.body;
+    if (!name || !owner) {
+        return res.status(400).send("Missing group name or owner");
+    }
+    const exists = groups.find(g => g.name === name);
+    if (exists) {
+        return res.status(409).send("Group name already taken");
+    }
+    groups.push({ name, owner, members: [owner] });
+    saveGroups();
+    res.status(200).send("Group created successfully");
+});
+
+// Join a group
+app.post('/join-group', (req, res) => {
+    const { name, username } = req.body;
+    const group = groups.find(g => g.name === name);
+    if (!group) {
+        return res.status(404).send("Group not found");
+    }
+    if (group.members.includes(username)) {
+        return res.status(400).send("Already a member");
+    }
+    group.members.push(username);
+    saveGroups();
+    res.status(200).send("Joined group successfully");
+});
+
+// Delete group (basta owner)
+app.post('/delete-group', (req, res) => {
+    const { name, username } = req.body;
+    const group = groups.find(g => g.name === name);
+    if (!group) {
+        return res.status(404).send("Group not found");
+    }
+    if (group.owner !== username) {
+        return res.status(403).send("Only the owner can delete this group");
+    }
+    groups = groups.filter(g => g.name !== name);
+    saveGroups();
+    res.status(200).send("Group deleted successfully");
+});
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
