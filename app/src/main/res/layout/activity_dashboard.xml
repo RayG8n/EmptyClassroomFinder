@@ -45,6 +45,14 @@
                 android:layout_margin="20dp"/>
 
             <Button
+                android:id="@+id/buttonGroups"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="To Groups"
+                android:layout_gravity="center"
+                android:layout_margin="20dp"/>
+
+            <Button
                 android:id="@+id/buttonBackToLogin"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"

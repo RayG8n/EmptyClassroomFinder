@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.example.emptyclassroomfinder.R
 import com.example.emptyclassroomfinder.app.Custom
 import com.example.emptyclassroomfinder.screens.dashboard.DashboardActivity
+import com.example.emptyclassroomfinder.screens.groups.GroupsActivity
 import com.example.emptyclassroomfinder.screens.login.LoginActivity
 import com.example.emptyclassroomfinder.screens.settings.SettingsActivity
 import com.google.android.material.navigation.NavigationView
@@ -83,6 +84,10 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View, NavigationVie
                 finish()
             }
             R.id.nav_profile -> drawerLayout.closeDrawer(GravityCompat.START)
+            R.id.nav_groups -> {
+                startActivity(Intent(this, GroupsActivity::class.java))
+                finish()
+            }
             R.id.nav_settings -> {
                 startActivity(Intent(this, SettingsActivity::class.java))
                 finish()

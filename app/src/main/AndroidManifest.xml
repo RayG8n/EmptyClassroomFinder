@@ -22,6 +22,9 @@
             android:name=".screens.rooms.RoomsActivity"
             android:exported="false" />
         <activity
+            android:name=".screens.groups.GroupsActivity"
+            android:exported="false" />
+        <activity
             android:name=".screens.settings.SettingsActivity"
             android:exported="false" />
         <activity

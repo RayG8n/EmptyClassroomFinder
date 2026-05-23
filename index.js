@@ -36,6 +36,21 @@ function saveRooms() {
     fs.writeFileSync(ROOMS_FILE, JSON.stringify(rooms));
 }
 
+// ── Groups ─────────────────────────────────────────────
+const GROUPS_FILE = 'groups.json';
+
+let groups = [];
+if (fs.existsSync(GROUPS_FILE)) {
+    groups = JSON.parse(fs.readFileSync(GROUPS_FILE));
+} else {
+    groups = [];
+    fs.writeFileSync(GROUPS_FILE, JSON.stringify(groups));
+}
+
+function saveGroups() {
+    fs.writeFileSync(GROUPS_FILE, JSON.stringify(groups));
+}
+
 // ── Routes ─────────────────────────────────────────────
 app.get('/', (req, res) => {
     res.send("Backend is running!");
@@ -91,6 +106,58 @@ app.post('/delete-room', (req, res) => {
     rooms = rooms.filter(r => r.name !== name);
     saveRooms();
     res.status(200).send("Room deleted successfully");
+});
+
+// ── Group Routes ───────────────────────────────────────
+app.get('/get-groups', (req, res) => {
+    res.json(groups);
+});
+
+app.post('/create-group', (req, res) => {
+    const { name, owner } = req.body;
+    if (!name || !owner) {
+        return res.status(400).send("Missing group name or owner");
+    }
+    if (groups.find(g => g.name === name)) {
+        return res.status(409).send("Group name already taken");
+    }
+
+    const newGroup = {
+        name: name,
+        owner: owner,
+        members: [owner]
+    };
+    groups.push(newGroup);
+    saveGroups();
+    res.status(200).json(newGroup);
+});
+
+app.post('/join-group', (req, res) => {
+    const { name, username } = req.body;
+    const group = groups.find(g => g.name === name);
+    if (!group) {
+        return res.status(404).send("Group not found");
+    }
+    if (!group.members.includes(username)) {
+        group.members.push(username);
+        saveGroups();
+    }
+    res.status(200).send("Joined successfully");
+});
+
+app.post('/delete-group', (req, res) => {
+    const { name, username } = req.body;
+    const groupIndex = groups.findIndex(g => g.name === name);
+    if (groupIndex === -1) {
+        return res.status(404).send("Group not found");
+    }
+    if (groups[groupIndex].owner !== username) {
+        return res.status(403).send("Only the owner can delete the group");
+    }
+
+    groups.splice(groupIndex, 1);
+    saveGroups();
+    res.status(200).send("Group deleted successfully");
 });
 
 app.listen(port, () => {
