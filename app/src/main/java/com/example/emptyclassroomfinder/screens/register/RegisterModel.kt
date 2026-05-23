@@ -19,7 +19,7 @@ class RegisterModel(private val app: Custom) {
 
     fun register(username: String, password: String, callback: RegisterCallback) {
         // Example: "https://my-backend.onrender.com/save-profile"
-        val url = "https://emptyclassroomfinder-2.onrender.com/save-profile"
+        val url = "https://emptyclassroomfinder-test.onrender.com/save-profile"
 
         val formBody = FormBody.Builder()
             .add("username", username)
