@@ -22,36 +22,48 @@ class RegisterActivity : Activity(), RegisterContract.View {
         val buttonRegister = findViewById<Button>(R.id.buttonRegister)
 
         buttonRegister.setOnClickListener {
-            val username = getEditTextValue(R.id.edittextUsername)
-            val password = getEditTextValue(R.id.edittextPassword)
-            val confirmPassword = getEditTextValue(R.id.edittextConfirmPassword)
+            val username = getEditTextValue(R.id.edittextUsername).trim()
+            val password = getEditTextValue(R.id.edittextPassword).trim()
+            val confirmPassword = getEditTextValue(R.id.edittextConfirmPassword).trim()
 
             registerPresenter.register(username, password, confirmPassword)
         }
     }
 
     override fun showSuccess() {
-        getToast("Registration successful!")
+        runOnUiThread {
+            getToast("Registration successful!")
+        }
     }
 
     override fun showEmptyField() {
-        getToast("All fields cannot be empty!")
+        runOnUiThread {
+            getToast("All fields cannot be empty!")
+        }
     }
 
     override fun showPasswordMismatch() {
-        getToast("Passwords do not match!")
+        runOnUiThread {
+            getToast("Passwords do not match!")
+        }
     }
 
     override fun showUsernameTaken() {
-        getToast("Username is already taken!")
+        runOnUiThread {
+            getToast("Username is already taken!")
+        }
     }
 
     override fun showError(message: String) {
-        getToast(message)
+        runOnUiThread {
+            getToast(message)
+        }
     }
 
     override fun goToLogin() {
-        startActivity(Intent(this, LoginActivity::class.java))
-        finish()
+        runOnUiThread {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
     }
 }

@@ -28,8 +28,8 @@ class LoginActivity : Activity(), LoginContract.View {
         val textviewRegister = findViewById<TextView>(R.id.textviewRegister)
 
         buttonLogin.setOnClickListener{
-           username = getEditTextValue(R.id.editextUsername)
-           password = getEditTextValue(R.id.editextPassword)
+           username = getEditTextValue(R.id.editextUsername).trim()
+           password = getEditTextValue(R.id.editextPassword).trim()
 
             Presenter.login(username, password)
         }
@@ -43,21 +43,34 @@ class LoginActivity : Activity(), LoginContract.View {
     }
 
     override fun showSuccess() {
-        getToast("Login successful!")
+        runOnUiThread {
+            getToast("Login successful!")
+        }
     }
 
     override fun showInvalidCredentials() {
-        getToast("Credentials do not match!")
+        runOnUiThread {
+            getToast("Credentials do not match!")
+        }
     }
 
     override fun showEmptyField() {
-        getToast("Username and Password cannot be empty!")
+        runOnUiThread {
+            getToast("Username and Password cannot be empty!")
+        }
+    }
+
+    override fun showMessage(message: String) {
+        runOnUiThread {
+            getToast(message)
+        }
     }
 
     override fun showHome() {
-
-        val dashboardIntent = Intent(this, DashboardActivity::class.java)
-
-        startActivity(dashboardIntent)
+        runOnUiThread {
+            val dashboardIntent = Intent(this, DashboardActivity::class.java)
+            startActivity(dashboardIntent)
+            finish()
+        }
     }
 }

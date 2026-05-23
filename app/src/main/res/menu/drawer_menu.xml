@@ -9,6 +9,10 @@
         android:title="Rooms"
         android:icon="@drawable/dashboard"/>
     <item
+        android:id="@+id/nav_groups"
+        android:title="Groups"
+        android:icon="@drawable/dashboard"/>
+    <item
         android:id="@+id/nav_profile"
         android:title="Profile"
         android:icon="@drawable/profile"/>
