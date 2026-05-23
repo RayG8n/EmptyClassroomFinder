@@ -7,7 +7,7 @@ import java.io.IOException
 
 class RoomsModel {
     private val client = OkHttpClient()
-    private val baseUrl = "https://emptyclassroomfinder-2.onrender.com"
+    private val baseUrl = "https://emptyclassroomfinder-test.onrender.com"
 
     interface RoomsCallback {
         fun onSuccess(rooms: List<Room>)
