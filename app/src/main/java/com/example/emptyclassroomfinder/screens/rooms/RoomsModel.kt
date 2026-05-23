@@ -49,7 +49,7 @@ class RoomsModel {
                         callback.onFailure("Parsing error: ${e.message}")
                     }
                 } else {
-                    callback.onFailure("Server error: ${response.code}")
+                    callback.onFailure("Server error: ${response.code} ${response.message}")
                 }
             }
         })
@@ -77,7 +77,7 @@ class RoomsModel {
                 if (response.isSuccessful) {
                     callback.onSuccess()
                 } else {
-                    callback.onFailure("Server error: ${response.code}")
+                    callback.onFailure("Server error: ${response.code} ${response.message}")
                 }
             }
         })
@@ -103,7 +103,7 @@ class RoomsModel {
                 if (response.isSuccessful) {
                     callback.onSuccess()
                 } else {
-                    callback.onFailure("Server error: ${response.code}")
+                    callback.onFailure("Server error: ${response.code} ${response.message}")
                 }
             }
         })

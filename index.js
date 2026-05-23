@@ -11,6 +11,11 @@ let rooms = [
     { name: "202", building: "RTL", time: "1:00 PM - 5:00 PM", schedule: "Tuesday" }
 ];
 
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+});
+
 app.post('/save-profile', (req, res) => {
     const { username, password } = req.body;
     console.log(`Received registration for: ${username}`);
@@ -47,7 +52,11 @@ app.post('/delete-room', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.send("Backend is running!");
+    res.json({
+        status: "Backend is running!",
+        routes: ["/get-rooms", "/save-room", "/delete-room", "/save-profile"],
+        roomsCount: rooms.length
+    });
 });
 
 app.listen(port, () => {
