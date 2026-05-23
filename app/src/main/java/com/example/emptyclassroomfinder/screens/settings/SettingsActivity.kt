@@ -1,12 +1,13 @@
-package com.example.emptyclassroomfinder.screens.profile
+package com.example.emptyclassroomfinder.screens.settings
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -14,40 +15,41 @@ import com.example.emptyclassroomfinder.R
 import com.example.emptyclassroomfinder.app.Custom
 import com.example.emptyclassroomfinder.screens.dashboard.DashboardActivity
 import com.example.emptyclassroomfinder.screens.login.LoginActivity
-import com.example.emptyclassroomfinder.screens.settings.SettingsActivity
+import com.example.emptyclassroomfinder.screens.profile.ProfileActivity
+import com.example.emptyclassroomfinder.screens.rooms.RoomsActivity
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.switchmaterial.SwitchMaterial
 
-class ProfileActivity : AppCompatActivity(), ProfileContract.View, NavigationView.OnNavigationItemSelectedListener {
+class SettingsActivity : AppCompatActivity(), SettingsContract.View, NavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var presenter: ProfilePresenter
-    private lateinit var textViewWelcome: TextView
+    private lateinit var presenter: SettingsPresenter
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var navView: NavigationView
+    private lateinit var switchDarkMode: SwitchMaterial
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+        setContentView(R.layout.activity_settings)
 
-        textViewWelcome = findViewById(R.id.textviewUser)
-        val buttonBackToLogin = findViewById<Button>(R.id.buttonBackToLogin)
+        presenter = SettingsPresenter(this, SettingsModel(application as Custom))
 
-        presenter = ProfilePresenter(this, ProfileModel(application as Custom))
-        presenter.initializeUsername()
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navView = findViewById(R.id.nav_view)
+        switchDarkMode = findViewById(R.id.switchDarkMode)
 
         setupDrawer()
 
-        buttonBackToLogin.setOnClickListener {
-            showLogin()
+        switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
+            presenter.setDarkMode(isChecked)
         }
+
+        presenter.loadSettings()
     }
 
     private fun setupDrawer() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-
-        drawerLayout = findViewById(R.id.drawer_layout)
-        navView = findViewById(R.id.nav_view)
 
         toggle = ActionBarDrawerToggle(
             this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close
@@ -57,23 +59,30 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View, NavigationVie
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         navView.setNavigationItemSelectedListener(this)
-        
 
         val headerView = navView.getHeaderView(0)
         val usernameTextView = headerView.findViewById<TextView>(R.id.nav_header_text)
-
-        usernameTextView.text = "User"
+        usernameTextView.text = (application as Custom).defaultUsername
     }
 
-    override fun displayUsername(message: String) {
-        textViewWelcome.text = message
+    override fun updateDarkModeStatus(isEnabled: Boolean) {
+        switchDarkMode.isChecked = isEnabled
     }
 
-    private fun showLogin() {
-        val intent = Intent(this, LoginActivity::class.java)
+    override fun applyDarkMode(isEnabled: Boolean) {
+        if (isEnabled) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+    }
 
-        startActivity(intent)
-        finish()
+    override fun showMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun closeDrawer() {
+        drawerLayout.closeDrawer(GravityCompat.START)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -82,12 +91,21 @@ class ProfileActivity : AppCompatActivity(), ProfileContract.View, NavigationVie
                 startActivity(Intent(this, DashboardActivity::class.java))
                 finish()
             }
-            R.id.nav_profile -> drawerLayout.closeDrawer(GravityCompat.START)
-            R.id.nav_settings -> {
-                startActivity(Intent(this, SettingsActivity::class.java))
+            R.id.nav_rooms -> {
+                startActivity(Intent(this, RoomsActivity::class.java))
                 finish()
             }
-            R.id.nav_logout -> showLogin()
+            R.id.nav_profile -> {
+                startActivity(Intent(this, ProfileActivity::class.java))
+                finish()
+            }
+            R.id.nav_settings -> drawerLayout.closeDrawer(GravityCompat.START)
+            R.id.nav_logout -> {
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true

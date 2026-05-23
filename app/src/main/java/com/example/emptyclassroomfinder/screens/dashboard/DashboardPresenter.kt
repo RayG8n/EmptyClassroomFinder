@@ -24,10 +24,7 @@ class DashboardPresenter(
                 }
             }
             R.id.nav_dashboard -> view.closeDrawer()
-            R.id.nav_settings -> {
-                // Future implementation
-                view.closeDrawer()
-            }
+            R.id.nav_settings -> view.showSettings()
         }
         view.closeDrawer()
     }

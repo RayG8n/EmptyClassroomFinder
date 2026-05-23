@@ -31,27 +31,39 @@ class RegisterActivity : Activity(), RegisterContract.View {
     }
 
     override fun showSuccess() {
-        getToast("Registration successful!")
+        runOnUiThread {
+            getToast("Registration successful!")
+        }
     }
 
     override fun showEmptyField() {
-        getToast("All fields cannot be empty!")
+        runOnUiThread {
+            getToast("All fields cannot be empty!")
+        }
     }
 
     override fun showPasswordMismatch() {
-        getToast("Passwords do not match!")
+        runOnUiThread {
+            getToast("Passwords do not match!")
+        }
     }
 
     override fun showUsernameTaken() {
-        getToast("Username is already taken!")
+        runOnUiThread {
+            getToast("Username is already taken!")
+        }
     }
 
     override fun showError(message: String) {
-        getToast(message)
+        runOnUiThread {
+            getToast(message)
+        }
     }
 
     override fun goToLogin() {
-        startActivity(Intent(this, LoginActivity::class.java))
-        finish()
+        runOnUiThread {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
     }
 }

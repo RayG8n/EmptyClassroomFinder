@@ -15,6 +15,7 @@ import com.example.emptyclassroomfinder.app.Custom
 import com.example.emptyclassroomfinder.screens.login.LoginActivity
 import com.example.emptyclassroomfinder.screens.profile.ProfileActivity
 import com.example.emptyclassroomfinder.screens.rooms.RoomsActivity
+import com.example.emptyclassroomfinder.screens.settings.SettingsActivity
 import com.google.android.material.navigation.NavigationView
 
 class DashboardActivity : AppCompatActivity(), DashboardContract.View, NavigationView.OnNavigationItemSelectedListener {
@@ -74,6 +75,11 @@ class DashboardActivity : AppCompatActivity(), DashboardContract.View, Navigatio
 
     override fun showProfile() {
         val intent = Intent(this, ProfileActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun showSettings() {
+        val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
     }
 

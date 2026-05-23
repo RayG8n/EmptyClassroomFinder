@@ -17,5 +17,9 @@ class Custom : Application() {
         get() = prefs.getString("password", "test") ?: "test"
         set(value) = prefs.edit { putString("password", value) }
 
+    var isDarkMode: Boolean
+        get() = prefs.getBoolean("dark_mode", false)
+        set(value) = prefs.edit { putBoolean("dark_mode", value) }
+
     var loginUser = User()
 }

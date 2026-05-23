@@ -42,6 +42,8 @@ class RegisterModel(private val app: Custom) {
                     app.defaultUsername = username
                     app.defaultPassword = password
                     callback.onSuccess()
+                } else if (response.code == 409) {
+                    callback.onFailure("Username already taken")
                 } else {
                     callback.onFailure("Server error: ${response.code}")
                 }

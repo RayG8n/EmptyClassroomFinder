@@ -4,6 +4,7 @@ class DashboardContract {
     interface View {
         fun updateUserInfo(username: String)
         fun showProfile()
+        fun showSettings()
         fun showLogin()
         fun closeDrawer()
     }

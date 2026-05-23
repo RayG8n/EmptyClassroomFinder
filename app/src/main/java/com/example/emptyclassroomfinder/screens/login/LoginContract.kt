@@ -5,6 +5,7 @@ package com.example.emptyclassroomfinder.screens.login
         fun showSuccess()
         fun showInvalidCredentials()
         fun showEmptyField()
+        fun showMessage(message: String)
         fun showHome()
     }
 
