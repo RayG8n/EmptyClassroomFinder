@@ -6,28 +6,21 @@ import java.io.IOException
 
 class RegisterModel(private val app: Custom) {
     private val client = OkHttpClient()
+    private val baseUrl = "https://emptyclassroomfinder-test.onrender.com"
 
     interface RegisterCallback {
         fun onSuccess()
         fun onFailure(message: String)
     }
 
-    fun isUsernameTaken(username: String): Boolean {
-        // This should also probably be a network call, but for now we keep it simple
-        return username.equals(app.defaultUsername, ignoreCase = true)
-    }
-
     fun register(username: String, password: String, callback: RegisterCallback) {
-        // Example: "https://my-backend.onrender.com/save-profile"
-        val url = "https://emptyclassroomfinder-test.onrender.com/save-profile"
-
         val formBody = FormBody.Builder()
             .add("username", username)
             .add("password", password)
             .build()
 
         val request = Request.Builder()
-            .url(url)
+            .url("$baseUrl/save-profile")
             .post(formBody)
             .build()
 

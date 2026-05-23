@@ -2,7 +2,7 @@ package com.example.emptyclassroomfinder.screens.groups
 
 import com.example.emptyclassroomfinder.data.Group
 
-interface GroupsContract {
+class GroupsContract {
     interface View {
         fun updateGroupsList(groups: List<Group>)
         fun showMessage(message: String)
