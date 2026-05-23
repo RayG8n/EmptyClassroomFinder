@@ -65,4 +65,8 @@ class GroupsPresenter(
     override fun onGroupClicked(group: Group) {
         view.showGroupDetails(group)
     }
+
+    override fun onGroupLongClicked(group: Group) {
+        view.showDeleteConfirmation(group)
+    }
 }

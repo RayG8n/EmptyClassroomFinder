@@ -26,8 +26,8 @@ if (fs.existsSync(ROOMS_FILE)) {
     rooms = JSON.parse(fs.readFileSync(ROOMS_FILE));
 } else {
     rooms = [
-        { name: "301", building: "GLE", time: "8:30 AM - 12:30 PM", schedule: "Monday" },
-        { name: "202", building: "RTL", time: "1:00 PM - 5:00 PM", schedule: "Tuesday" }
+        { name: "301", building: "GLE", time: "8:30 AM - 12:30 PM", schedule: "2023-10-30" },
+        { name: "202", building: "RTL", time: "1:00 PM - 5:00 PM", schedule: "2023-10-31" }
     ];
     fs.writeFileSync(ROOMS_FILE, JSON.stringify(rooms));
 }

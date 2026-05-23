@@ -53,6 +53,12 @@ class GroupsActivity : AppCompatActivity(), GroupsContract.View, NavigationView.
             presenter.onGroupClicked(group)
         }
 
+        listView.setOnItemLongClickListener { _, _, position, _ ->
+            val group = listView.adapter.getItem(position) as Group
+            presenter.onGroupLongClicked(group)
+            true
+        }
+
         presenter.loadGroups()
     }
 
@@ -79,7 +85,9 @@ class GroupsActivity : AppCompatActivity(), GroupsContract.View, NavigationView.
 
     override fun updateGroupsList(groups: List<Group>) {
         runOnUiThread {
-            listView.adapter = GroupsAdapter(this, groups.toMutableList())
+            listView.adapter = GroupsAdapter(this, groups.toMutableList()) { group ->
+                presenter.onGroupLongClicked(group)
+            }
         }
     }
 
@@ -131,6 +139,21 @@ class GroupsActivity : AppCompatActivity(), GroupsContract.View, NavigationView.
             .show()
     }
 
+    override fun showDeleteConfirmation(group: Group) {
+        val app = application as Custom
+        if (group.owner != app.defaultUsername) {
+            Toast.makeText(this, "Only the owner can delete the group", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle("Delete Group")
+            .setMessage("Do you want to delete ${group.name}?")
+            .setPositiveButton("Yes") { _, _ -> presenter.deleteGroup(group.name) }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
     override fun closeDrawer() {
         drawerLayout.closeDrawer(GravityCompat.START)
     }
@@ -165,8 +188,17 @@ class GroupsActivity : AppCompatActivity(), GroupsContract.View, NavigationView.
         return true
     }
 
+    override fun onCreateOptionsMenu(menu: android.view.Menu?): Boolean {
+        menuInflater.inflate(R.menu.refresh_menu, menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        if (item.itemId == R.id.action_refresh) {
+            presenter.loadGroups()
             return true
         }
         return super.onOptionsItemSelected(item)

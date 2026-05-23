@@ -144,7 +144,9 @@ class RoomsActivity : AppCompatActivity(), RoomsContract.View, NavigationView.On
 
     override fun updateList(rooms: List<Room>) {
         runOnUiThread {
-            listView.adapter = RoomsAdapter(this, rooms.toMutableList())
+            listView.adapter = RoomsAdapter(this, rooms.toMutableList()) { room ->
+                presenter.onRoomLongClicked(room)
+            }
         }
     }
 
@@ -264,8 +266,17 @@ class RoomsActivity : AppCompatActivity(), RoomsContract.View, NavigationView.On
         return true
     }
 
+    override fun onCreateOptionsMenu(menu: android.view.Menu?): Boolean {
+        menuInflater.inflate(R.menu.refresh_menu, menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        if (item.itemId == R.id.action_refresh) {
+            presenter.loadRooms()
             return true
         }
         return super.onOptionsItemSelected(item)

@@ -1,37 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/textRoomName"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:text="Room 101" />
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/btnDeleteRoom"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textBuilding"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Main Building"
-        android:textColor="#666666" />
+        <TextView
+            android:id="@+id/textRoomName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="Room 101" />
 
-    <TextView
-        android:id="@+id/textTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="8:30 AM - 12:30 PM"
-        android:textColor="#366CF4" />
+        <TextView
+            android:id="@+id/textBuilding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Main Building"
+            android:textColor="#666666" />
 
-    <TextView
-        android:id="@+id/textSchedule"
+        <TextView
+            android:id="@+id/textTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="8:30 AM - 12:30 PM"
+            android:textColor="#366CF4" />
+
+        <TextView
+            android:id="@+id/textSchedule"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2023-10-30"
+            android:textColor="#FF5722"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/textDayOfWeek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Monday"
+            android:textColor="#FF5722"
+            android:textStyle="italic" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btnDeleteRoom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Monday"
-        android:textColor="#FF5722"
-        android:textStyle="italic" />
-</LinearLayout>
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@android:drawable/ic_menu_delete"
+        android:contentDescription="Delete Room" />
+
+</RelativeLayout>

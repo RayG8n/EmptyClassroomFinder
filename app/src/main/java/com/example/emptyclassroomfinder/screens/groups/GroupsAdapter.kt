@@ -5,11 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageButton
 import android.widget.TextView
 import com.example.emptyclassroomfinder.R
 import com.example.emptyclassroomfinder.data.Group
 
-class GroupsAdapter(private val context: Context, private val groups: MutableList<Group>) : BaseAdapter() {
+class GroupsAdapter(
+    private val context: Context, 
+    private val groups: MutableList<Group>,
+    private val onDeleteClick: (Group) -> Unit
+) : BaseAdapter() {
 
     override fun getCount(): Int = groups.size
     override fun getItem(position: Int): Any = groups[position]
@@ -23,10 +28,15 @@ class GroupsAdapter(private val context: Context, private val groups: MutableLis
         val nameText = view.findViewById<TextView>(R.id.textGroupName)
         val ownerText = view.findViewById<TextView>(R.id.textOwner)
         val memberCountText = view.findViewById<TextView>(R.id.textMemberCount)
+        val btnDelete = view.findViewById<ImageButton>(R.id.btnDeleteGroup)
         
         nameText.text = group.name
         ownerText.text = "Owner: ${group.owner}"
         memberCountText.text = "${group.members.size} members"
+
+        btnDelete.setOnClickListener {
+            onDeleteClick(group)
+        }
         
         return view
     }

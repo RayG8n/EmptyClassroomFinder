@@ -8,6 +8,7 @@ class GroupsContract {
         fun showMessage(message: String)
         fun showCreateGroupDialog()
         fun showGroupDetails(group: Group)
+        fun showDeleteConfirmation(group: Group)
         fun closeDrawer()
     }
 
@@ -17,5 +18,6 @@ class GroupsContract {
         fun joinGroup(groupName: String)
         fun deleteGroup(groupName: String)
         fun onGroupClicked(group: Group)
+        fun onGroupLongClicked(group: Group)
     }
 }
