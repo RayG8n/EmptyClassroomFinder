@@ -160,6 +160,7 @@ app.post('/delete-group', (req, res) => {
     res.status(200).send("Group deleted successfully");
 });
 
+//https://emptyclassroomfinder-test.onrender.com/debug-users       para makita ang registered accounts sa current usage
 app.get('/debug-users', (req, res) => {
     res.json(users);
 });
